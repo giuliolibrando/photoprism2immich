@@ -15,9 +15,9 @@ Tool to migrate Photoprism library to Immich.
 
 options:
   -h, --help            show this help message and exit
-  --apikey APIKEY       API key for Photoprism server
+  --apikey APIKEY       API key for Immich server
   --baseapiurl BASEAPIURL
-                        Base URL of the Photoprism server
+                        Base URL of the Immich server
   --originals ORIGINALS
                         Path to the originals folder
   -l LOG, --log LOG     Path to the log file

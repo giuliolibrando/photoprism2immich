@@ -78,8 +78,8 @@ def upload_files_from_path(path, api_key, base_url, log_file):
 def main():
     # Parsing degli argomenti da linea di comando
     parser = argparse.ArgumentParser(description='Tool to migrate Photoprism library to Immich.')
-    parser.add_argument('--apikey', help='API key for Photoprism server', required=True)
-    parser.add_argument('--baseapiurl', help='Base URL of the Photoprism server', required=True)
+    parser.add_argument('--apikey', help='API key for Immich server', required=True)
+    parser.add_argument('--baseapiurl', help='Base URL of the Immich server', required=True)
     parser.add_argument('--originals', help='Path to the originals folder', required=True)
     parser.add_argument('-l', '--log', help='Path to the log file', default='uploaded_files.log')
     parser.add_argument('-v', '--version', action='version', version=f'%(prog)s {version("photoprism2immich")}')
