@@ -1,0 +1,2 @@
+[console_scripts]
+photoprism2immich = photoprism2immich.photoprism2immich:main
