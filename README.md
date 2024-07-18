@@ -1,23 +1,25 @@
+
 # photoprism2immich
 `photoprism2immich` is a tool to migrate media libraries and albums from Photoprism to Immich.
 The tools scan the original photoprism files folders and upload all the images and videos on Immich using API calls. It also query Photoprism API to retrieve albums photo and create the albums on Immich.
 
 It has a built-in feature for skipping already uploaded files and albums in case something goes wrong during upload, avoiding duplicates.  
 
-The `migrate-album` feature draws heavy inspiration from  [ppim-migrator](https://github.com/v411e/ppim-migrator) by user [v411e](https://github.com/v411e)
+The `migrate-album` and `migrate-favorites` features draws heavy inspiration from  [ppim-migrator](https://github.com/v411e/ppim-migrator) by user [v411e](https://github.com/v411e)
 
 # Usage
 ```
-(photoprism-env) root@localhost:/photoprism2immich# photoprism2immich -h
-usage: photoprism2immich [-h] {migrate-library,migrate-album} ...
+(photoprism-env) root@pve:/localhost# photoprism2immich -h
+usage: photoprism2immich [-h] {migrate-library,migrate-album,migrate-favorites} ...
 
 Tool to manage Photoprism library with Immich.
 
 positional arguments:
-  {migrate-library,migrate-album}
+  {migrate-library,migrate-album,migrate-favorites}
                         Sub-command to execute
-    migrate-library     Migrate Photoprism library to Immich.
+    migrate-library     Migrate Photoprism library and albums to Immich.
     migrate-album       Migrate a specific album to Immich.
+    migrate-favorites   Migrate favorite photos to Immich.
 
 options:
   -h, --help            show this help message and exit
@@ -71,6 +73,11 @@ photoprism2immich migrate-library --apikey "aaaaaaaaaaaaaa" --baseapiurl "http:/
 Example command for migrating ALL albums  (if you want to migrate one album only specify here):
 ```
 photoprism2immich migrate-album --photoprism_url="http://photoprism.local:20800/" --photoprism_user="user" --photoprism_password="password" --immich_url="http://immich.local:2283" --immich_api="aaaaaaaaaaaaaa" --album ALL
+```
+
+Example command for migrating favorites:
+```
+photoprism2immich migrate-favorites --photoprism_url="http://photoprism.local:20800/" --photoprism_user="user" --photoprism_password="password" --immich_url="http://immich.local:2283" --immich_api="aaaaaaaaaaaaaa"
 ```
 
 # Build yourself

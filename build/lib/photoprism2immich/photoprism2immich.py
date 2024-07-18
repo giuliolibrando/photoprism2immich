@@ -95,14 +95,28 @@ def main():
     album_parser.add_argument('--album', help='Specific album to migrate', default='ALL')
     album_parser.add_argument('-l', '--log', help='Path to the log file', default='uploaded_albums.log')
 
+    # Comando migrate-favorites
+    favorites_parser = subparsers.add_parser('migrate-favorites', help='Migrate favorite photos to Immich.')
+    favorites_parser.add_argument('--photoprism_url', help='URL of the Photoprism server', required=True)
+    favorites_parser.add_argument('--photoprism_user', help='Username for Photoprism', required=True)
+    favorites_parser.add_argument('--photoprism_password', help='Password for Photoprism', required=True)
+    favorites_parser.add_argument('--immich_url', help='Base URL of the Immich server', required=True)
+    favorites_parser.add_argument('--immich_api', help='API key for Immich server', required=True)
+    favorites_parser.add_argument('-l', '--log', help='Path to the log file', default='uploaded_favorites.log')
+
     # Parsing degli argomenti
     args = parser.parse_args()
 
     if args.command == 'migrate-library':
         upload_files_from_path(args.originals, args.apikey, args.baseapiurl, args.log)
-    if args.command == 'migrate-album':
+    elif args.command == 'migrate-album':
         migrator = Migrator(args.photoprism_url, args.photoprism_user, args.photoprism_password, args.immich_url, args.immich_api)
         migrator.migrate_album(args.album)
+    elif args.command == 'migrate-favorites':
+        migrator = Migrator(args.photoprism_url, args.photoprism_user, args.photoprism_password, args.immich_url, args.immich_api)
+        migrator.migrate_favorites()
+    else:
+        parser.print_help()
 
 if __name__ == "__main__":
     main()

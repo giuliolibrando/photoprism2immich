@@ -10,6 +10,26 @@ class Migrator:
         self.log_folder = log_folder or '.'  # Use current directory if log_folder is not specified
         os.makedirs(self.log_folder, exist_ok=True)  # Ensure log_folder exists
 
+    def migrate_favorites(self):
+        click.echo("Migrating favorites...")
+
+        # Step 1: Retrieve photo files from favorites in Photoprism
+        photo_file_list = self.pp_api.get_photo_files_in_favorites()
+        click.echo(f"Found {len(photo_file_list)} photos in favorites.")
+
+        # Step 2: Match favorite photos in Immich
+        matching_uids = self._get_matching_uids(photo_file_list)
+        matches_uids = matching_uids.get("uids")
+        files_not_found = matching_uids.get("files_not_found")
+        self._summary(matches_uids=matches_uids, files_not_found=files_not_found)
+
+        # Step 3: Set matched photos as favorites in Immich
+        for uid in matches_uids:
+            self.im_api.set_as_favorite(uid)
+
+        click.echo("Migration of favorites completed.")
+
+
     def migrate_album(self, album='ALL'):
         click.echo(f"Migrating album: {album if album != 'ALL' else 'ALL'}")
 
