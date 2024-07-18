@@ -1,4 +1,3 @@
-
 # photoprism2immich
 `photoprism2immich` is a tool to migrate media libraries and albums from Photoprism to Immich.
 The tools scan the original photoprism files folders and upload all the images and videos on Immich using API calls. It also query Photoprism API to retrieve albums photo and create the albums on Immich.
@@ -64,11 +63,12 @@ options:
 ```
 pip install photoprism2immich
 ```
+# Usage
 Example command for migrating library:
 ```
 photoprism2immich migrate-library --apikey "aaaaaaaaaaaaaa" --baseapiurl "http://immich.local:2283/api" --originals "/photoprism-originals"
 ```
-
+**IMPORTANT**: **if you want to import albums and favorites, first change the default Immich path library from /YYYY/MM/DD to /YYYY/MM**
 
 Example command for migrating ALL albums  (if you want to migrate one album only specify here):
 ```
