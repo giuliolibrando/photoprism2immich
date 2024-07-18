@@ -3,7 +3,10 @@ README.md
 setup.py
 photoprism2immich/__init__.py
 photoprism2immich/__version__.py
+photoprism2immich/immich_api.py
+photoprism2immich/migrator.py
 photoprism2immich/photoprism2immich.py
+photoprism2immich/photoprism_api.py
 photoprism2immich.egg-info/PKG-INFO
 photoprism2immich.egg-info/SOURCES.txt
 photoprism2immich.egg-info/dependency_links.txt

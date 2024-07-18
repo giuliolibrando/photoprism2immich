@@ -1,9 +1,7 @@
 #!/usr/bin/python3
-
-import requests
 import os
-from datetime import datetime
 import argparse
+from photoprism2immich.migrator import Migrator
 from importlib.metadata import version
 
 # Funzione per gestire l'upload dei file
@@ -32,7 +30,7 @@ def upload(file, api_key, base_url, log_file):
         response = requests.post(
             f'{base_url}/assets', headers=headers, data=data, files=files)
 
-        if response.status_code in [200, 201]:  # Success codes: 200 (OK), 201 (Created)
+        if response.status_code in [200, 201]:
             print("Upload successful!")
             print(response.json())
             log_uploaded_file(file, log_file)
@@ -76,21 +74,35 @@ def upload_files_from_path(path, api_key, base_url, log_file):
 
 # Funzione principale del programma
 def main():
-    # Parsing degli argomenti da linea di comando
-    parser = argparse.ArgumentParser(description='Tool to migrate Photoprism library to Immich.')
-    parser.add_argument('--apikey', help='API key for Photoprism server', required=True)
-    parser.add_argument('--baseapiurl', help='Base URL of the Photoprism server', required=True)
-    parser.add_argument('--originals', help='Path to the originals folder', required=True)
-    parser.add_argument('-l', '--log', help='Path to the log file', default='uploaded_files.log')
-    parser.add_argument('-v', '--version', action='version', version=f'%(prog)s {version("photoprism2immich")}')
+    # Parsing degli argomenti da linea di comando con subcommands
+    parser = argparse.ArgumentParser(description='Tool to manage Photoprism library with Immich.')
+    subparsers = parser.add_subparsers(dest='command', required=True, help='Sub-command to execute')
+
+    # Comando migrate-library
+    migrate_parser = subparsers.add_parser('migrate-library', help='Migrate Photoprism library and albums to Immich.')
+    migrate_parser.add_argument('--apikey', help='API key for Immich server', required=True)
+    migrate_parser.add_argument('--baseapiurl', help='Base URL of the Immich server', required=True)
+    migrate_parser.add_argument('--originals', help='Path to the originals folder', required=True)
+    migrate_parser.add_argument('-l', '--log', help='Path to the log file', default='uploaded_files.log')
+
+    # Comando migrate-album
+    album_parser = subparsers.add_parser('migrate-album', help='Migrate a specific album to Immich.')
+    album_parser.add_argument('--photoprism_url', help='URL of the Photoprism server', required=True)
+    album_parser.add_argument('--photoprism_user', help='Username for Photoprism', required=True)
+    album_parser.add_argument('--photoprism_password', help='Password for Photoprism', required=True)
+    album_parser.add_argument('--immich_url', help='Base URL of the Immich server', required=True)
+    album_parser.add_argument('--immich_api', help='API key for Immich server', required=True)
+    album_parser.add_argument('--album', help='Specific album to migrate', default='ALL')
+    album_parser.add_argument('-l', '--log', help='Path to the log file', default='uploaded_albums.log')
+
+    # Parsing degli argomenti
     args = parser.parse_args()
 
-    # Verifica se i parametri obbligatori sono stati forniti
-    if not (args.apikey and args.baseapiurl and args.originals):
-        parser.error('The following arguments are required: --apikey, --baseapiurl, --originals')
-
-    # Eseguire l'upload dei file dalla cartella originals
-    upload_files_from_path(args.originals, args.apikey, args.baseapiurl, args.log)
+    if args.command == 'migrate-library':
+        upload_files_from_path(args.originals, args.apikey, args.baseapiurl, args.log)
+    if args.command == 'migrate-album':
+        migrator = Migrator(args.photoprism_url, args.photoprism_user, args.photoprism_password, args.immich_url, args.immich_api)
+        migrator.migrate_album(args.album)
 
 if __name__ == "__main__":
     main()

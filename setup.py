@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='photoprism2immich',
-    version='0.1.2',
+    version='0.2.0',
     packages=find_packages(),
     include_package_data=True,
     install_requires=[
@@ -18,7 +18,7 @@ setup(
     },
     author='Giulio Librando',
     author_email='giuliolibrando@gmail.com',
-    description='Tool to migrate Photoprism library to Immich',
+    description='Tool to migrate Photoprism library and albums to Immich',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
     url='https://github.com/giuliolibrando/photoprism2immich',

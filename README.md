@@ -1,17 +1,31 @@
 # photoprism2immich
-`photoprism2immich` is a tool to migrate medial libraries from Photoprism to Immich.
-The tools scan the original photoprism files folders and upload all the images and videos on Immich using API calls.
+`photoprism2immich` is a tool to migrate media libraries and albums from Photoprism to Immich.
+The tools scan the original photoprism files folders and upload all the images and videos on Immich using API calls. It also query Photoprism API to retrieve albums photo and create the albums on Immich.
 
-It has a built-in feature for skipping already uploaded files in case something goes wrong during upload, avoiding duplicates.  
+It has a built-in feature for skipping already uploaded files and albums in case something goes wrong during upload, avoiding duplicates.  
 
-
+The `migrate-album` feature draws heavy inspiration from  [ppim-migrator](https://github.com/v411e/ppim-migrator) by user [v411e](https://github.com/v411e)
 
 # Usage
 ```
 (photoprism-env) root@localhost:/photoprism2immich# photoprism2immich -h
-usage: photoprism2immich [-h] --apikey APIKEY --baseapiurl BASEAPIURL --originals ORIGINALS [-l LOG] [-v]
+usage: photoprism2immich [-h] {migrate-library,migrate-album} ...
 
-Tool to migrate Photoprism library to Immich.
+Tool to manage Photoprism library with Immich.
+
+positional arguments:
+  {migrate-library,migrate-album}
+                        Sub-command to execute
+    migrate-library     Migrate Photoprism library to Immich.
+    migrate-album       Migrate a specific album to Immich.
+
+options:
+  -h, --help            show this help message and exit
+```
+migrate-library help:
+```
+(photoprism-env) root@pve:/localhost# photoprism2immich migrate-library -h
+usage: photoprism2immich migrate-library [-h] --apikey APIKEY --baseapiurl BASEAPIURL --originals ORIGINALS [-l LOG]
 
 options:
   -h, --help            show this help message and exit
@@ -21,17 +35,42 @@ options:
   --originals ORIGINALS
                         Path to the originals folder
   -l LOG, --log LOG     Path to the log file
-  -v, --version         show program's version number and exit
 ```
+migrate-album help:
+```
+(photoprism-env) root@pve:/localhost# photoprism2immich migrate-album -h
+usage: photoprism2immich migrate-album [-h] --photoprism_url PHOTOPRISM_URL --photoprism_user PHOTOPRISM_USER --photoprism_password PHOTOPRISM_PASSWORD
+                                       --immich_url IMMICH_URL --immich_api IMMICH_API [--album ALBUM] [-l LOG]
 
+options:
+  -h, --help            show this help message and exit
+  --photoprism_url PHOTOPRISM_URL
+                        URL of the Photoprism server
+  --photoprism_user PHOTOPRISM_USER
+                        Username for Photoprism
+  --photoprism_password PHOTOPRISM_PASSWORD
+                        Password for Photoprism
+  --immich_url IMMICH_URL
+                        Base URL of the Immich server
+  --immich_api IMMICH_API
+                        API key for Immich server
+  --album ALBUM         Specific album to migrate
+  -l LOG, --log LOG     Path to the log file
+```
 
 # Installation
 ```
 pip install photoprism2immich
 ```
-Example command:
+Example command for migrating library:
 ```
-photoprism2immich --apikey "aaaaaaaaaaaaaa" --baseapiurl "http://192.168.1.5:2283/api" --originals "/photoprism-originals"
+photoprism2immich migrate-library --apikey "aaaaaaaaaaaaaa" --baseapiurl "http://immich.local:2283/api" --originals "/photoprism-originals"
+```
+
+
+Example command for migrating ALL albums  (if you want to migrate one album only specify here):
+```
+photoprism2immich migrate-album --photoprism_url="http://photoprism.local:20800/" --photoprism_user="user" --photoprism_password="password" --immich_url="http://immich.local:2283" --immich_api="aaaaaaaaaaaaaa" --album ALL
 ```
 
 # Build yourself
