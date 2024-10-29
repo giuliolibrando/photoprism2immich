@@ -69,7 +69,7 @@ def upload_files_from_path(path, api_key, base_url, log_file):
                 print(f"Skipping already uploaded file: {file_path}")
                 continue
             file_extension = os.path.splitext(file)[1].lower()
-            if file_extension in ['.jpg', '.jpeg', '.heic', '.mov', '.mp4', '.png', '.m4v']:
+            if file_extension in ['.jpg', '.jpeg', '.jpe', '.insp', '.heic', '.heif', '.avif', '.bmp', '.gif', '.jxl', '.png', '.psd', '.raw', '.rw2', '.svg', '.tif', '.tiff', '.webp','.mov', '.mp4', '.insv', '.m4v', '.3gp', '.3gpp', '.avi', '.flv', '.mkv', '.mts', '.m2ts', '.mpg', '.mpe', '.mpeg', '.webm', '.wmv']:
                 upload(file_path, api_key, base_url, log_file)
             else:
                 print(f"Skipping unsupported file type: {file_path}")
