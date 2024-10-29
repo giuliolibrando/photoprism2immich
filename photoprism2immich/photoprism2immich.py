@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 import os
 import argparse
+import requests
+import datetime
 from photoprism2immich.migrator import Migrator
 from importlib.metadata import version
 
