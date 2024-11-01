@@ -1,3 +1,5 @@
+![PyPI Downloads](https://static.pepy.tech/badge/photoprism2immich)
+
 # photoprism2immich
 `photoprism2immich` is a tool to migrate media libraries and albums from Photoprism to Immich.
 The tools scan the original photoprism files folders and upload all the images and videos on Immich using API calls. It also query Photoprism API to retrieve albums photo and create the albums on Immich.
