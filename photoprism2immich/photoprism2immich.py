@@ -2,7 +2,7 @@
 import os
 import argparse
 import requests
-import datetime
+from datetime import datetime
 from photoprism2immich.migrator import Migrator
 from importlib.metadata import version
 

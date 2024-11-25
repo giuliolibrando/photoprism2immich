@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: photoprism2immich
-Version: 0.3.0
+Version: 0.4.1
 Summary: Tool to migrate Photoprism library and albums to Immich
 Home-page: https://github.com/giuliolibrando/photoprism2immich
 Author: Giulio Librando
@@ -11,7 +11,9 @@ Classifier: Programming Language :: Python :: 3
 Classifier: Operating System :: OS Independent
 Description-Content-Type: text/markdown
 License-File: LICENSE
+Requires-Dist: requests
 
+![PyPI Downloads](https://static.pepy.tech/badge/photoprism2immich)
 
 # photoprism2immich
 `photoprism2immich` is a tool to migrate media libraries and albums from Photoprism to Immich.
@@ -78,11 +80,12 @@ options:
 ```
 pip install photoprism2immich
 ```
+# Usage
 Example command for migrating library:
 ```
 photoprism2immich migrate-library --apikey "aaaaaaaaaaaaaa" --baseapiurl "http://immich.local:2283/api" --originals "/photoprism-originals"
 ```
-
+**IMPORTANT**: **if you want to import albums and favorites, first change the default Immich path library from /YYYY/MM/DD to /YYYY/MM**
 
 Example command for migrating ALL albums  (if you want to migrate one album only specify here):
 ```
