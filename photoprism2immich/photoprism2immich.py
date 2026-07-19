@@ -19,8 +19,8 @@ def upload(file, api_key, base_url, log_file):
     data = {
         'deviceAssetId': f'{file}-{stats.st_mtime}',
         'deviceId': 'python',
-        'fileCreatedAt': datetime.fromtimestamp(stats.st_mtime),
-        'fileModifiedAt': datetime.fromtimestamp(stats.st_mtime),
+        'fileCreatedAt': datetime.fromtimestamp(stats.st_mtime).strftime('%Y-%m-%dT%H:%M:%S.000Z'),
+        'fileModifiedAt': datetime.fromtimestamp(stats.st_mtime).strftime('%Y-%m-%dT%H:%M:%S.000Z'),
         'isFavorite': 'false',
     }
 
